@@ -1,0 +1,20 @@
+{
+  "name": "blog-mongo-express-pug-scss",
+  "version": "0.0.1",
+  "description": "Boilerplate for simple blog with MongoDB, Express, Pug and SCSS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Georgi Nikoloff",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.1",
+    "mongodb": "^2.2.22",
+    "pug": "^2.0.0-beta11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

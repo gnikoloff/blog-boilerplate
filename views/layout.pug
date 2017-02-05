@@ -4,8 +4,11 @@ head
     
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(href="https://fonts.googleapis.com/css?family=Poppins:400,500" rel="stylesheet" type="text/css")
-body(style="font-family: 'Poppins', sans-serif;font-weight: 400;")
+    body(style="font-family: 'Poppins', sans-serif;font-weight: 400;")
+    
     div#app-container
+        include header.pug
         block body
+        include footer.pug
 
     script(src="/bundle.js")

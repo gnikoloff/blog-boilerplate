@@ -51,7 +51,9 @@ app.use(passport.session())
 app.use(flash())
 
 app.route('/').get((req, res) => {
-    res.render('index', {})
+    let entries = Entry.find({}, (err, entries) => {
+        res.render('index', { entries: entries })
+    })
 })
 
 app.route('/login').get((req, res) => {
@@ -65,7 +67,7 @@ app.post('/login', (req, res, next) => {
 app.post('/login', urlencodedParser, passport.authenticate('local', {successRedirect: '/dashboard', failureRedirect: '/login', failureFlash: true}));
 
 app.route('/dashboard').get((req, res) => {
-    let entries = Entry.find({}, (err, entries) => {
+    Entry.find({}, (err, entries) => {
         res.render('dashboard', { entries: entries })
     })
 })
@@ -84,6 +86,14 @@ app.route('/dashboard/new').post((req, res) => {
     })
     Entry.insertMany([entry])
     res.redirect('/dashboard')
+})
+
+app.route('/entry/:slug').get((req, res) => {
+    const slug = req.params.slug
+    Entry.find({ slug: slug }, (err, entry) => {
+        entry = entry[0]
+        res.render('entry', { entry: entry })
+    })
 })
 
 app.listen(PORT, () => {

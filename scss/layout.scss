@@ -1,0 +1,32 @@
+.container {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.app-header,
+.app-footer {
+    padding: 4rem 0;
+}
+.app-header {
+    span {
+        font-size: 2rem;
+    }
+}
+.app-footer {
+    .container {
+        display: flex;
+        justify-content: space-between;
+        .social-links {
+            ul {
+                li {
+                    list-style: none;
+                    display: inline-block;
+                    margin-right: 1rem;
+                    &:last-of-type {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}

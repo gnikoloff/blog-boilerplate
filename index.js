@@ -25,7 +25,8 @@ const passport = require('passport')
 const Entry = require('./server/entrySchema')
 const User = require('./server/userSchema')
 
-app.set('view engine', 'pug')   
+app.set('view engine', 'pug')
+app.use(express.static('public'))   
 app.use(cookieParser('keyboard_cat'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({

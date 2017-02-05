@@ -16,7 +16,6 @@ const adminUser = new User({
     username: ADMIN_USERNAME,
     password: ADMIN_PASSWORD
 })
-console.log(adminUser)
 User.count({}, (err, count) => {
     if (count === 0) {
         User.register(new User({ username : ADMIN_USERNAME }), ADMIN_PASSWORD, function(err, account) {

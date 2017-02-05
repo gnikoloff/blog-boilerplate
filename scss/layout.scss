@@ -3,11 +3,16 @@
     margin: 0 auto;
 }
 
+.page {
+    padding: 3rem 0 0 0;
+}
+
 .app-header,
 .app-footer {
     padding: 4rem 0;
 }
 .app-header {
+    background: rgba(#000, 0.2);
     span {
         font-size: 2rem;
     }
@@ -29,4 +34,12 @@
             }
         }
     }
+}
+
+.entry-preview-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 2.25rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }

@@ -1,5 +1,7 @@
-extends ./layout.pug
+extends ./shared/layout.pug
 block body
-    div.entry-page
+    div.page.entry-page
         div.container
-            h1 #{entry.title}
+            a(href="/") Back
+            div.entry-content
+                h1 #{entry.title}

@@ -1,8 +1,8 @@
-extends ./layout.pug
+extends ./shared/layout.pug
 block body
-    div.home-page
+    div.page.home-page
         div.container
             each entry, index in entries
                 a(href=`entry/${entry.slug}`)
-                    p #{index}
+                    include shared/entry-preview
             

@@ -1,6 +1,18 @@
 .container {
-    width: 40%;
+    width: 95%;
     margin: 0 auto;
+    @media (min-width: 800px) {
+        width: 88%;
+    }
+    @media (min-width: 1170px) {
+        width: 60%;
+    }
+    @media (min-width: 1470px) {
+        width: 50%;
+    }
+    @media (min-width: 1700px) {
+        width: 40%;
+    }
 }
 
 .page {
@@ -12,7 +24,7 @@
     padding: 4rem 0;
 }
 .app-header {
-    background: rgba(#000, 0.2);
+    background: rgba(#000, 0.04);
     span {
         font-size: 2rem;
     }
@@ -42,4 +54,10 @@
     align-items: baseline;
     padding: 2.25rem 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.entry-page {
+    .entry-meta {
+        margin-top: 2.5rem;
+    }
 }

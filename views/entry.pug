@@ -2,6 +2,11 @@ extends ./shared/layout.pug
 block body
     div.page.entry-page
         div.container
-            a(href="/") Back
+            a.back-link(href="/") Back
             div.entry-content
                 h1 #{entry.title}
+                div.entry-wysiwyg-body
+                    div !{ entry.body }
+                div.entry-meta
+                    h5 Platform: 
+                    span #{ entry.type }

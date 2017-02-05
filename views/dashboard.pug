@@ -2,7 +2,6 @@ extends ./shared/layout.pug
 block body
     div.page.dashboard-page
         div.container
-            h1 Dash
             each entry, index in entries
-                p #{index}
-            
+                a(href=`entry/edit/${entry.slug}`)
+                    include shared/entry-preview

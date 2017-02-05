@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: $body_color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: $heading_color;
+    font-weight: 500;
+}
+
+.meta-title {
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    font-size: 0.85rem;
+}
+
+a { 
+    display: block;
+    text-decoration: none;
+    color: $secondary_color;
+    &.back-link {
+        display: block;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(#000, 0.12);
+    }
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 0.75rem 0;
+    background: #111;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+form {
+    .form-grouping {
+        margin-bottom: 1rem;
+        label {
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border-radius: 2px;
+            border: 1px solid rgba(#000, 0.12);
+            &#image {
+                display: none;
+            }
+            &.btn-submit {
+                padding: 1rem 0.75rem;
+            }
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import MediumEditor from 'medium-editor'
+import socialite from 'socialite'
 
 import Styles from '../scss/imports.scss'
 

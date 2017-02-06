@@ -37,7 +37,6 @@ app.use(bodyParser.urlencoded({
 passport.use(User.createStrategy())
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
-
 app.use(require('express-session')({
     secret: 'keyboard_cat',
     resave: false,

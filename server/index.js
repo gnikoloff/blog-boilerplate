@@ -23,11 +23,11 @@ db.on('error', console.error.bind(console), 'connection error')
 
 
 const passport = require('passport')
-const Entry = require('./server/entrySchema')
-const User = require('./server/userSchema')
+const Entry = require('./entrySchema')
+const User = require('./userSchema')
 
 app.set('view engine', 'pug')
-app.set('views', path.join(__dirname, '/client/views'));
+app.set('views', path.join(__dirname, '../client/views'));
 app.use(express.static('public'))   
 app.use(cookieParser('keyboard_cat'))
 app.use(bodyParser.json())
@@ -74,16 +74,15 @@ app.route('/dashboard').get((req, res) => {
     })
 })
 
-app.route('/dashboard/new').get((req, res) => {
-    res.render('new-post', {})
+app.route('/entry/new').get((req, res) => {
+    res.render('entry-new', {})
 })
 
-app.route('/dashboard/new').post((req, res) => {
+app.route('/entry/new').post((req, res) => {
     const entry = new Entry({
         title: req.body.title,
         slug: req.body.title.toLowerCase().split(' ').join('-'),
         type: req.body.type,
-        imageUrl: 's',
         body: req.body.body
     })
     Entry.insertMany([entry])
@@ -95,6 +94,14 @@ app.route('/entry/:slug').get((req, res) => {
     Entry.find({ slug: slug }, (err, entry) => {
         entry = entry[0]
         res.render('entry', { entry: entry })
+    })
+})
+
+app.route('/entry/edit/:slug').get((req, res) => {
+    const slug = req.params.slug
+    Entry.find({ slug: slug }, (err, entry) => {
+        entry = entry[0]
+        res.render('entry-edit', { entry: entry })
     })
 })
 

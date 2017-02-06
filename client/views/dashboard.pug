@@ -1,7 +1,8 @@
 extends ./shared/layout.pug
 block body
     div.page.dashboard-page
+        div.container.dash-actions
+            a(href="/dashboard/new") New Entry
         div.container
             each entry, index in entries
-                a(href=`entry/edit/${entry.slug}`)
-                    include shared/entry-preview
+                include shared/entry-edit

@@ -3,18 +3,15 @@ block body
     div.page.new-post-page
         div.container
             a.back-link(href="/dashboard") Back
-            form(action="/dashboard/new" method="post")
+            form(action="/entry/new" method="post")
                 div.form-grouping
                     label.meta-title(for="title") Title
-                    input#title(type="text" name="title" placeholder="Entry Title")
+                    input#title(value=`${entry.title}` type="text" name="title" required placeholder="Entry Title")
                 div.form-grouping
                     label.meta-title(for="type") Type
-                    input#type(type="text" name="type" placeholder="Entry Type")
-                div.form-grouping
-                    label.meta-title(for="image") Image
-                    input#image(type="image" name="image")
+                    input#type(value=`${entry.type}` type="text" name="type" required placeholder="Entry Type")
                 div.form-grouping
                     label.meta-title(for="body") Post body
-                    textarea#body.editable(name="body" rows="20")
+                    textarea#body.editable(name="body" required rows="20") #{entry.body}
                 div.form-grouping
                     input.btn-submit(type="submit" value="Save")

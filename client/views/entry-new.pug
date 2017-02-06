@@ -1,0 +1,17 @@
+extends ./shared/layout.pug
+block body
+    div.page.new-post-page
+        div.container
+            a.back-link(href="/dashboard") Back
+            form(action="/dashboard/new" method="post")
+                div.form-grouping
+                    label.meta-title(for="title") Title
+                    input#title(type="text" name="title" required placeholder="Entry Title")
+                div.form-grouping
+                    label.meta-title(for="type") Type
+                    input#type(type="text" name="type" required placeholder="Entry Type")
+                div.form-grouping
+                    label.meta-title(for="body") Post body
+                    textarea#body.editable(name="body" required rows="20")
+                div.form-grouping
+                    input.btn-submit(type="submit" value="Save")

@@ -3,6 +3,5 @@ block body
     div.page.home-page
         div.container
             each entry, index in entries
-                a(href=`entry/${entry.slug}`)
-                    include shared/entry-preview
+                include shared/entry-preview
             

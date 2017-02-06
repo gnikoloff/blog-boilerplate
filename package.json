@@ -3,9 +3,13 @@
   "version": "0.0.1",
   "description": "Boilerplate for simple blog with MongoDB, Express, Pug and SCSS",
   "main": "index.js",
+  "engines": {
+    "node": "7.4.0",
+    "npm": "4.0.5"
+  },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start":  "node server/index.js",
+    "dev": "nodemon server/index.js"
   },
   "author": "Georgi Nikoloff",
   "license": "ISC",

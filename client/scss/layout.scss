@@ -49,11 +49,14 @@
 }
 
 .entry-preview-container {
-    display: flex;
+    display: block;
     justify-content: space-between;
     align-items: baseline;
     padding: 2.25rem 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    @media (min-width: 800px) {
+        display: flex;
+    }
 }
 
 .entry-page {

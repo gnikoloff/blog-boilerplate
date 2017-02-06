@@ -7,20 +7,17 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
+const cloudinary = require('cloudinary')
+const fileUpload = require('express-fileupload')
+const Datauri = require('datauri')
 
 const PORT = process.env.PORT || 1002
 const dbURI = process.env.PROD_MONGODB
 
 mongoose.Promise = global.Promise
 mongoose.connect(dbURI)
-
 const db = mongoose.connection
-
 db.on('error', console.error.bind(console), 'connection error')
-//db.once('open', () => {
-//    console.log('db connected')
-//})
-
 
 const passport = require('passport')
 const Entry = require('./entrySchema')
@@ -31,6 +28,7 @@ app.set('views', path.join(__dirname, '../client/views'));
 app.use(express.static('public'))   
 app.use(cookieParser('keyboard_cat'))
 app.use(bodyParser.json())
+app.use(fileUpload())
 app.use(bodyParser.urlencoded({
     extended: false
 }))
@@ -62,10 +60,6 @@ app.route('/login').get((req, res) => {
     res.render('login', {})
 })
 
-app.post('/login', (req, res, next) => {
-    console.log(req.body)
-    next()
-})
 app.post('/login', urlencodedParser, passport.authenticate('local', {successRedirect: '/dashboard', failureRedirect: '/login', failureFlash: true}));
 
 app.route('/dashboard').get((req, res) => {
@@ -79,16 +73,19 @@ app.route('/entry/new').get((req, res) => {
 })
 
 app.route('/entry/new').post((req, res) => {
-    console.log(req.body)
-    const entry = new Entry({
-        title: req.body.title,
-        slug: req.body.title.toLowerCase().split(' ').join('-'),
-        type: req.body.type,
-        imageUrl: 's',
-        body: req.body.body
+    const dUri = new Datauri()
+    dUri.format('.png', req.files.image.data)
+    cloudinary.uploader.upload(dUri.content, (result) => {
+        const entry = new Entry({
+            title: req.body.title,
+            slug: req.body.title.toLowerCase().split(' ').join('-'),
+            type: req.body.type,
+            imageUrl: result.url,
+            body: req.body.body
+        })
+        Entry.insertMany([entry])
+        res.redirect('/dashboard')
     })
-    Entry.insertMany([entry])
-    res.redirect('/dashboard')
 })
 
 app.route('/entry/:slug').get((req, res) => {

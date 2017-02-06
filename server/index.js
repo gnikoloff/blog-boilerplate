@@ -47,6 +47,7 @@ app.use(passport.session())
 app.use(flash())
 
 app.use(require('./router'))
+require('./scraper')
 
 app.listen(PORT, () => {
     console.log(`App is listening on ${PORT}`)

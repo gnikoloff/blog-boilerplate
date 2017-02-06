@@ -21,7 +21,6 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console), 'connection error')
 
 const passport = require('passport')
-const Entry = require('./entrySchema')
 const User = require('./userSchema')
 
 app.set('view engine', 'pug')
@@ -34,9 +33,6 @@ app.use(fileUpload())
 app.use(bodyParser.urlencoded({
     extended: false
 }))
-const urlencodedParser = bodyParser.urlencoded({
-    extended: false
-})
 
 passport.use(User.createStrategy())
 passport.serializeUser(User.serializeUser())
@@ -51,105 +47,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 
-app.route('/').get((req, res) => {
-    const pageSize = 12
-    let pageNum = parseInt(req.query.page) - 1
-    if (!pageNum) {
-        Entry.count({}, (err, count) => {
-            Entry.find({}).limit(pageSize).exec((err, entries) => {
-                res.render('index', { entries: entries, pageCount: count })
-            })
-        })
-    } else {
-        Entry.count({}, (err, count) => {
-            Entry.find({}).limit(pageSize).skip(pageSize * pageNum).exec((err, entries) => {
-                res.render('index', { entries: entries, pageCount: count })
-            })
-        })
-    } 
-})
-
-app.route('/login').get((req, res) => {
-    res.render('login', {})
-})
-
-app.post('/login', urlencodedParser, passport.authenticate('local', {successRedirect: '/dashboard', failureRedirect: '/login', failureFlash: true}));
-
-app.route('/dashboard').get((req, res) => {
-    const pageSize = 12
-    let pageNum = parseInt(req.query.page) - 1
-    if (!pageNum) {
-        Entry.count({}, (err, count) => {
-            Entry.find({}).limit(pageSize).exec((err, entries) => {
-                res.render('dashboard', { entries: entries, pageCount: count })
-            })
-        })
-    } else {
-        Entry.count({}, (err, count) => {
-            Entry.find({}).limit(pageSize).skip(pageSize * pageNum).exec((err, entries) => {
-                res.render('dashboard', { entries: entries, pageCount: count })
-            })
-        })
-    } 
-})
-
-app.route('/entry/new').get((req, res) => {
-    res.render('entry-new', {})
-})
-
-app.route('/entry/new').post((req, res) => {
-    const dUri = new Datauri()
-    dUri.format('.png', req.files.image.data)
-    cloudinary.uploader.upload(dUri.content, (result) => {
-        const entry = new Entry({
-            title: req.body.title,
-            slug: req.body.title.toLowerCase().split(' ').join('-'),
-            type: req.body.type,
-            imageUrl: result.url,
-            body: req.body.body
-        })
-        Entry.insertMany([entry])
-        res.redirect('/dashboard')
-    })
-})
-
-app.route('/entry/:slug').get((req, res) => {
-    const slug = req.params.slug
-    Entry.find({ slug: slug }, (err, entry) => {
-        entry = entry[0]
-        res.render('entry', { entry: entry })
-    })
-})
-
-app.route('/entry/edit/:slug').get((req, res) => {
-    const slug = req.params.slug
-    Entry.find({ slug: slug }, (err, entry) => {
-        entry = entry[0]
-        res.render('entry-edit', { entry: entry })
-    })
-})
-
-app.route('/entry/edit/:slug').post((req, res) => {
-    const slug = req.params.slug
-    const entry = {
-        title: req.body.title,
-        slug: req.body.title.toLowerCase().split(' ').join('-'),
-        type: req.body.type,
-        body: req.body.body
-    } 
-    Entry.update({ slug: slug }, { $set: entry }, (err, result) => {
-        console.log(result)
-    })
-    console.log(`/entry/${slug}`)
-    res.redirect(`/entry/${slug}`)
-})
-
-app.route('/entry/delete/:slug').get((req, res) => {
-    const slug = req.params.slug
-    Entry.remove({ slug: slug }, (err, result) => {
-        res.redirect('/dashboard')
-    })
-})
+app.use(require('./router'))
 
 app.listen(PORT, () => {
     console.log(`App is listening on ${PORT}`)

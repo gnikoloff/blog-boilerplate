@@ -11,6 +11,9 @@ block body
                     label.meta-title(for="type") Type
                     input#type(value=`${entry.type}` type="text" name="type" required placeholder="Entry Type")
                 div.form-grouping
+                    label.meta-title(for="image") Image
+                    input#image(type="file" name="image")
+                div.form-grouping
                     label.meta-title(for="body") Post body
                     textarea#body.editable(name="body" required rows="20") #{entry.body}
                 div.form-grouping

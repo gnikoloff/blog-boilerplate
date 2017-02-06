@@ -2,6 +2,7 @@
 const path = require('path')
 const express = require('express')
 const app = express()
+const compression = require('compression')
 const mongodb = require('mongodb')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
@@ -25,6 +26,7 @@ const User = require('./userSchema')
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, '../client/views'));
+app.use(compression())
 app.use(express.static('public'))   
 app.use(cookieParser('keyboard_cat'))
 app.use(bodyParser.json())

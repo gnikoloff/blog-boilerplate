@@ -1,7 +1,41 @@
 'use strict'
-
+const request = require('request')
 const ScrapedItem = require('./scrapeSchema')
 const Entry = require('./entrySchema')
+const Datauri = require('datauri')
+
+// add twitter facebook posting
+const secret = {
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token: process.env.ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
+}
+
+const twitterPackage = require('twit')
+const twitter = new twitterPackage(secret)
+
+const postToTwitter = (entry) => {
+    console.log(entry)
+    request.get({
+        uri: entry.imageUrl,
+        encoding: 'base64'
+    }, (err, res, body) => {
+        twitter.post('media/upload', { media_data: body }, (err, data, response) => {
+            var mediaIdStr = data.media_id_string
+            var meta_params = { media_id: mediaIdStr, alt_text: { text: 'Retro Image Screen' } }
+            twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+                if (!err) {
+                    // now we can reference the media and post a tweet (media will attach to the tweet)
+                    var params = { status: `${entry.title} for ${entry.type}`, media_ids: [mediaIdStr] }
+                    twitter.post('statuses/update', params, function (err, data, response) {
+                        console.log(data)
+                    })
+                }
+            })
+        })
+    })
+}
 
 const post = () => {
     let a = ScrapedItem.aggregate(
@@ -18,12 +52,13 @@ const post = () => {
                         imageUrl: `http://mobygames.com${res.imageUrls[Math.floor(Math.random() * imagesLen)]}`,
                         body: `<p>${res.title} for <em>${res.platform}</em></p>`
                     })
-                    Entry.insertMany([entry])          
+                    postToTwitter(entry)      
+                    Entry.insertMany([entry])    
                }
            })
        }
     )
-}
+} 
 
 module.exports = {
     post: post

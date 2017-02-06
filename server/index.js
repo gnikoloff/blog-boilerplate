@@ -40,7 +40,6 @@ passport.use(User.createStrategy())
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-
 app.use(require('express-session')({
     secret: 'keyboard_cat',
     resave: false,
@@ -51,9 +50,21 @@ app.use(passport.session())
 app.use(flash())
 
 app.route('/').get((req, res) => {
-    let entries = Entry.find({}, (err, entries) => {
-        res.render('index', { entries: entries })
-    })
+    const pageSize = 12
+    let pageNum = parseInt(req.query.page) - 1
+    if (!pageNum) {
+        Entry.count({}, (err, count) => {
+            Entry.find({}).limit(pageSize).exec((err, entries) => {
+                res.render('index', { entries: entries, pageCount: count })
+            })
+        })
+    } else {
+        Entry.count({}, (err, count) => {
+            Entry.find({}).limit(pageSize).skip(pageSize * pageNum).exec((err, entries) => {
+                res.render('index', { entries: entries, pageCount: count })
+            })
+        })
+    } 
 })
 
 app.route('/login').get((req, res) => {
@@ -63,9 +74,21 @@ app.route('/login').get((req, res) => {
 app.post('/login', urlencodedParser, passport.authenticate('local', {successRedirect: '/dashboard', failureRedirect: '/login', failureFlash: true}));
 
 app.route('/dashboard').get((req, res) => {
-    Entry.find({}, (err, entries) => {
-        res.render('dashboard', { entries: entries })
-    })
+    const pageSize = 12
+    let pageNum = parseInt(req.query.page) - 1
+    if (!pageNum) {
+        Entry.count({}, (err, count) => {
+            Entry.find({}).limit(pageSize).exec((err, entries) => {
+                res.render('dashboard', { entries: entries, pageCount: count })
+            })
+        })
+    } else {
+        Entry.count({}, (err, count) => {
+            Entry.find({}).limit(pageSize).skip(pageSize * pageNum).exec((err, entries) => {
+                res.render('dashboard', { entries: entries, pageCount: count })
+            })
+        })
+    } 
 })
 
 app.route('/entry/new').get((req, res) => {

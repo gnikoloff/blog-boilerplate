@@ -47,7 +47,27 @@
         }
     }
 }
-
+.pagination-container {
+    padding: 1rem 0;
+    ul {
+        li {
+            list-style: none;
+            display: inline-block;
+            margin-left: 0.75rem;
+            &:first-of-type {
+                margin-left: 0;
+                margin-right: 0.425rem;
+            }
+            span {
+                padding: 0.25rem 0.85rem;
+                &.active {
+                    background: #111;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
 
 .entry-image-preview {
     margin-bottom: 1.5rem;

@@ -5,6 +5,7 @@ const entrySchema = new Schema({
     title: String,
     slug: String,
     type: String,
+    imageUrl: String,
     body: String
 })
 

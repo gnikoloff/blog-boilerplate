@@ -79,10 +79,12 @@ app.route('/entry/new').get((req, res) => {
 })
 
 app.route('/entry/new').post((req, res) => {
+    console.log(req.body)
     const entry = new Entry({
         title: req.body.title,
         slug: req.body.title.toLowerCase().split(' ').join('-'),
         type: req.body.type,
+        imageUrl: 's',
         body: req.body.body
     })
     Entry.insertMany([entry])
@@ -103,6 +105,21 @@ app.route('/entry/edit/:slug').get((req, res) => {
         entry = entry[0]
         res.render('entry-edit', { entry: entry })
     })
+})
+
+app.route('/entry/edit/:slug').post((req, res) => {
+    const slug = req.params.slug
+    const entry = {
+        title: req.body.title,
+        slug: req.body.title.toLowerCase().split(' ').join('-'),
+        type: req.body.type,
+        body: req.body.body
+    } 
+    Entry.update({ slug: slug }, { $set: entry }, (err, result) => {
+        console.log(result)
+    })
+    console.log(`/entry/${slug}`)
+    res.redirect(`/entry/${slug}`)
 })
 
 app.listen(PORT, () => {

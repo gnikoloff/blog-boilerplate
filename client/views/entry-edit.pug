@@ -3,7 +3,7 @@ block body
     div.page.new-post-page
         div.container
             a.back-link(href="/dashboard") Back
-            form(action="/entry/new" method="post")
+            form(action=`/entry/edit/${entry.slug}` method="post")
                 div.form-grouping
                     label.meta-title(for="title") Title
                     input#title(value=`${entry.title}` type="text" name="title" required placeholder="Entry Title")

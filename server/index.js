@@ -142,6 +142,13 @@ app.route('/entry/edit/:slug').post((req, res) => {
     res.redirect(`/entry/${slug}`)
 })
 
+app.route('/entry/delete/:slug').get((req, res) => {
+    const slug = req.params.slug
+    Entry.remove({ slug: slug }, (err, result) => {
+        res.redirect('/dashboard')
+    })
+})
+
 app.listen(PORT, () => {
     console.log(`App is listening on ${PORT}`)
 })

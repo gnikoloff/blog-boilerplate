@@ -1,6 +1,9 @@
 div.entry-preview-container
     a(href=`entry/${entry.slug}`)
-        div.entry-preview-title
-            h2 #{entry.title}
-        div.entry-preview-type
-            span #{entry.type}
+        div.entry-image-preview
+            img(src=`${entry.imageUrl}` alt=`${entry.title} Image Preview`)
+        div.entry-preview
+            div.entry-preview-title
+                h2 #{entry.title}
+            div.entry-preview-type
+                span #{entry.type}

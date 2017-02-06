@@ -4,6 +4,8 @@ block body
         div.container
             a.back-link(href="/") Back
             div.entry-content
+                div.entry-image-preview
+                    img(src=`${entry.imageUrl}` alt=`${entry.title} Image Preview`)
                 h1 #{entry.title}
                 div.entry-wysiwyg-body
                     div !{ entry.body }

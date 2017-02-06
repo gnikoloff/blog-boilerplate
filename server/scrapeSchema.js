@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const scrapeSchema = new Schema({
     title: String,
     platform: String,
+    year: String,
     imageUrls: [String]
 })
 

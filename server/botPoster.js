@@ -26,11 +26,8 @@ const postToTwitter = (entry) => {
             var meta_params = { media_id: mediaIdStr, alt_text: { text: 'Retro Image Screen' } }
             twitter.post('media/metadata/create', meta_params, function (err, data, response) {
                 if (!err) {
-                    // now we can reference the media and post a tweet (media will attach to the tweet)
-                    var params = { status: `${entry.title} for ${entry.type}`, media_ids: [mediaIdStr] }
-                    twitter.post('statuses/update', params, function (err, data, response) {
-                        console.log(data)
-                    })
+                    let params = { status: `"${entry.title}" for ${entry.type} (${entry.year})`, media_ids: [mediaIdStr] }
+                    twitter.post('statuses/update', params)
                 }
             })
         })
@@ -49,8 +46,9 @@ const post = () => {
                         title: res.title,
                         slug: res.title.toLowerCase().split(' ').join('-'),
                         type: res.platform,
+                        year: res.year,
                         imageUrl: `http://mobygames.com${res.imageUrls[Math.floor(Math.random() * imagesLen)]}`,
-                        body: `<p>${res.title} for <em>${res.platform}</em></p>`
+                        body: `<p>${res.title} for <strong>${res.platform}</strong> (${res.year})</p>`
                     })
                     postToTwitter(entry)      
                     Entry.insertMany([entry])    

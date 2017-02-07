@@ -71,7 +71,7 @@ const post = () => {
                         imageUrl: `http://mobygames.com${res.imageUrls[Math.floor(Math.random() * imagesLen)]}`,
                         body: `<p>${res.title} for <strong>${res.platform}</strong> (${res.year})</p>`
                     })
-                    //postToTwitter(entry)      
+                    postToTwitter(entry)      
                     postToFacebook(entry)
                     Entry.insertMany([entry])    
                }

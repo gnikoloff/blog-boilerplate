@@ -49,7 +49,12 @@ app.use(flash())
 app.use(require('./router'))
 //require('./scraper')
 const poster = require('./botPoster')
-poster.post()
+const schedule = require('node-schedule')
+const rule = new schedule.RecurrenceRule()
+rule.hours = 1
+schedule.scheduleJob(rule, () => {
+    poster.post()
+})
 
 app.listen(PORT, () => {
     console.log(`App is listening on ${PORT}`)

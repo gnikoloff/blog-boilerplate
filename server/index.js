@@ -51,7 +51,7 @@ app.use(require('./router'))
 const poster = require('./botPoster')
 const schedule = require('node-schedule')
 const rule = new schedule.RecurrenceRule()
-rule.hours = 1
+rule.hour = 1
 schedule.scheduleJob(rule, () => {
     poster.post()
 })

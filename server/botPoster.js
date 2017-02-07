@@ -34,6 +34,27 @@ const postToTwitter = (entry) => {
     })
 }
 
+const FB = require('fb')
+FB.options({
+    accessToken: process.env.FB_ACCESS_TOKEN,
+    appId: process.env.FB_APP_ID,
+    appSecret: process.env.FB_APP_SECRET,
+    version: 'v2.8'
+})
+
+const postToFacebook = (entry) => {
+    FB.api('me/photos', 'post', {
+        url: entry.imageUrl,
+        caption: `"${entry.title}" for ${entry.type} (${entry.year})`
+    }, (res) => {
+        if(!res || res.error) {
+            console.log(!res ? 'error occurred' : res.error)
+            return;
+        }
+        console.log('Post Id: ' + res.id)
+    })
+}
+
 const post = () => {
     let a = ScrapedItem.aggregate(
        { $sample: { size: 1 } }, (err, res) => {
@@ -50,7 +71,8 @@ const post = () => {
                         imageUrl: `http://mobygames.com${res.imageUrls[Math.floor(Math.random() * imagesLen)]}`,
                         body: `<p>${res.title} for <strong>${res.platform}</strong> (${res.year})</p>`
                     })
-                    postToTwitter(entry)      
+                    //postToTwitter(entry)      
+                    postToFacebook(entry)
                     Entry.insertMany([entry])    
                }
            })

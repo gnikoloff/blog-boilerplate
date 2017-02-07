@@ -21,10 +21,3 @@ Entries can be uploaded to twitter and facebook from the blog as well.
 The project uses Mongo as database, Express as a server and Heroku Cloudinary for image uploading from the blog.
 The blog itself uses Passport.js for authentication, Pug for templates and SCSS for styling.
 
-## Support
-
-Please [open an issue](https://github.com/gnikoloff/video-game-curator-bot/issues/new) for support.
-
-## Contributing
-
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/fraction/readme-boilerplate/compare/).
